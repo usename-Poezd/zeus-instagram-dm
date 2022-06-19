@@ -5,21 +5,18 @@ import (
 )
 
 type Config struct {
-	DBConfig
+	ZeusConfig
 }
 
-type DBConfig struct {
-	Server   string `mapstructure:"DB_NAME"`
-	User     string `mapstructure:"DB_SERVER"`
-	Password string `mapstructure:"DB_USER"`
-	Name     string `mapstructure:"DB_PASSWORD"`
+type ZeusConfig struct {
+	Token   string `mapstructure:"ZEUS_TOKEN"`
 }
 
 // Init populates Config struct with values from config file
 // located at filepath and environment variables.
-func Init(configsDir string) (*Config, error) {
+func Init(configFile string) (*Config, error) {
 
-	if err := parseConfigFile(configsDir); err != nil {
+	if err := parseConfigFile(configFile); err != nil {
 		return nil, err
 	}
 
@@ -32,9 +29,9 @@ func Init(configsDir string) (*Config, error) {
 	return &cfg, nil
 }
 
-func parseConfigFile(folder string) error {
-	viper.AddConfigPath(folder)
-	viper.SetConfigFile(".env")
+func parseConfigFile(configFile string) error {
+	viper.SetConfigFile(configFile)
+	viper.AutomaticEnv()
 	
 	if err := viper.ReadInConfig(); err != nil {
 		return err
@@ -45,5 +42,5 @@ func parseConfigFile(folder string) error {
 }
 
 func unmarshal(cfg *Config) error {
-	return viper.UnmarshalExact(&cfg.DBConfig)
+	return viper.UnmarshalExact(&cfg.ZeusConfig)
 }
