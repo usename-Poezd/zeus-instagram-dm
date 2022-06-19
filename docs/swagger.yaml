@@ -1,0 +1,45 @@
+basePath: /
+host: localhost:3000
+info:
+  contact: {}
+  description: REST API for Zeus Instagram DM spam
+  title: Zeus Instagram DM API
+  version: "1.0"
+paths:
+  /ping:
+    get:
+      consumes:
+      - application/json
+      description: Ping
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: pong
+          schema:
+            type: string
+        "400":
+          description: error
+          schema:
+            type: string
+        "401":
+          description: error
+          schema:
+            type: string
+        "500":
+          description: error
+          schema:
+            type: string
+        "503":
+          description: error
+          schema:
+            type: string
+      summary: Ping
+      tags:
+      - service
+securityDefinitions:
+  UsersAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
